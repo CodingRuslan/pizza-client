@@ -14,24 +14,16 @@ export default class PizzaService {
 
 	getIngredients = async () => {
 		const res = await this.getResource('/ingredients/');
-		// console.log(res);
-		return res._transformPerson();
+		// console.log(res.map(this._transformIngredients));
+		return await res.map(this._transformIngredients);
 	};
 
-	// _extractId = (item) => {
-	// 	const idRegExp = /\/([0-9]*)\/$/;
-	// 	return item.url.match(idRegExp)[1];
-	// };
-
-	_transformPerson = (person) => {
+	_transformIngredients= (ingredient) => {
 		return {
-			id: person.idingredients,
-			name: person.name,
-			timeCook: person.timeCook,
+			id: ingredient.idingredients,
+			name: ingredient.name,
+			timeCook: ingredient.timeCook,
+			imageSrc: ingredient.imageSrc
 		}
 	}
-
-	// getIngredients() {
-	// 	return [];
-	// }
 }

@@ -1,0 +1,30 @@
+.ingredient-list-item {
+    display: flex;
+    margin: 15px 0;
+}
+
+.ingredient-list-item .ingredient-cover {
+    flex-shrink: 0;
+    width: 120px;
+    margin-right: 30px;
+}
+
+.ingredient-list-item .ingredient-cover img {
+    max-width: 100%;
+}
+
+.ingredient-list-item .ingredient-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    align-items: flex-start;
+}
+
+.ingredient-list-item .ingredient-details .ingredient-name {
+    font-size: 2rem;
+}
+
+.ingredient-list-item .ingredient-details .ingredient-time {
+    font-size: 1.2rem;
+}

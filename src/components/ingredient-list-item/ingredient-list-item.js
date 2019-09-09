@@ -1,13 +1,21 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import './ingredient-list-item.css'
 
 const IngredientListItem = ({ ingredient }) => {
-	const {name, timeCook } = ingredient;
+	const {name, timeCook, imageSrc } = ingredient;
 	return(
-		<Fragment>
-			<span>{name}</span>
-			<span>{timeCook}</span>
-		</Fragment>
+		<div className="ingredient-list-item">
+			<div className="ingredient-list-item">
+				<div className="ingredient-cover">
+					<img src={"http://localhost:8080/images/" + imageSrc} alt='pizza'/>
+				</div>
+				<div className="ingredient-details">
+					<div className="ingredient-name">{name}</div>
+					<div className="ingredient-time">time for preparing: {timeCook} sec</div>
+					<button className="btn btn-info add-to-cart">Add to cart</button>
+				</div>
+			</div>
+		</div>
 	)
 };
 
