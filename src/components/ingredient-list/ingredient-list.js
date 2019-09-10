@@ -3,23 +3,29 @@ import { connect } from 'react-redux';
 import IngredientListItem from "../ingredient-list-item";
 
 import {withPizzaService} from '../hoc'
-import { ingredientsLoaded} from "../../actions";
+import { fetchIngredients } from "../../actions";
 import { compose } from "../../utils";
 import './ingredient-list.css'
+import Spinner from "../spinner";
+import ErrorIndicator from "../error-indicator";
 
 class IngredientList extends Component {
 
 	componentDidMount() {
-		const {pizzaService} = this.props;
-		const data = pizzaService.getIngredients()
-			.then(e => this.props.ingredientsLoaded(e));
-		console.log(data);
-
-		// this.props.ingredientsLoaded(data);
+		this.props.fetchIngredients();
 	}
 
 	render() {
-		const {ingredients} = this.props;
+		const {ingredients, loading, error} = this.props;
+
+		if (loading) {
+			return <Spinner/>
+		}
+
+		if (error) {
+			return <ErrorIndicator/>
+		}
+
 		return (
 			<ul className='ingredient-list'>
 				{
@@ -34,12 +40,15 @@ class IngredientList extends Component {
 	}
 }
 
-const mapStateToProps = ({ ingredients }) => {
-	return { ingredients }
+const mapStateToProps = ({ ingredients, loading, error }) => {
+	return { ingredients, loading, error }
 };
 
-const mapDispatchToProps = {
-	ingredientsLoaded
+const mapDispatchToProps = (dispatch, ownProps) => {
+	const { pizzaService } = ownProps;
+	return {
+		fetchIngredients: fetchIngredients(pizzaService, dispatch)
+	}
 };
 
 export default compose(

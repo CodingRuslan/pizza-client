@@ -1,14 +1,30 @@
 
  const initialState = {
-		ingredients: []
+	 ingredients: [],
+	 loading: true,
+	 error: null
  };
 
 const reducer = (state = initialState, action) => {
 
 	switch (action.type) {
-		case "INGREDIENTS_LOADED":
+		case "FETCH_INGREDIENTS_REQUEST":
 			return {
-				ingredients: action.payload
+				ingredients: [],
+				loading: true,
+				error: null
+			};
+		case "FETCH_INGREDIENTS_SUCCESS":
+			return {
+				ingredients: action.payload,
+				loading: false,
+				error: null
+			};
+		case "FETCH_INGREDIENTS_FAILURE":
+			return {
+				ingredients: [],
+				loading: false,
+				error: action.payload
 			};
 
 		default:
