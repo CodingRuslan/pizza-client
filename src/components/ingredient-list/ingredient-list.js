@@ -3,20 +3,39 @@ import { connect } from 'react-redux';
 import IngredientListItem from "../ingredient-list-item";
 
 import {withPizzaService} from '../hoc'
-import { fetchIngredients } from "../../actions";
+import { fetchIngredients, ingredientAddedToCart } from "../../actions";
 import { compose } from "../../utils";
 import './ingredient-list.css'
 import Spinner from "../spinner";
 import ErrorIndicator from "../error-indicator";
 
-class IngredientList extends Component {
+const IngredientList = ({ ingredients, onAddedToCart }) => {
+	return (
+		<ul className='ingredient-list'>
+			{
+				ingredients.map((ingredient) => {
+					return (
+						<li key={ingredient.id}>
+							<IngredientListItem
+								ingredient={ingredient}
+								onAddedToCart={() => onAddedToCart(ingredient.id)}
+							/>
+						</li>
+					)
+				})
+			}
+		</ul>
+	);
+};
+
+class IngredientListContainer extends Component {
 
 	componentDidMount() {
 		this.props.fetchIngredients();
 	}
 
 	render() {
-		const {ingredients, loading, error} = this.props;
+		const {ingredients, loading, error, onAddedToCart} = this.props;
 
 		if (loading) {
 			return <Spinner/>
@@ -26,17 +45,7 @@ class IngredientList extends Component {
 			return <ErrorIndicator/>
 		}
 
-		return (
-			<ul className='ingredient-list'>
-				{
-					ingredients.map((ingredient) => {
-						return (
-							<li key={ingredient.id}><IngredientListItem ingredient={ingredient}/></li>
-						)
-					})
-				}
-			</ul>
-		);
+		return <IngredientList ingredients={ingredients} onAddedToCart={onAddedToCart}/>
 	}
 }
 
@@ -47,11 +56,12 @@ const mapStateToProps = ({ ingredients, loading, error }) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
 	const { pizzaService } = ownProps;
 	return {
-		fetchIngredients: fetchIngredients(pizzaService, dispatch)
+		fetchIngredients: fetchIngredients(pizzaService, dispatch),
+		onAddedToCart: (id) => dispatch(ingredientAddedToCart(id))
 	}
 };
 
 export default compose(
 	withPizzaService(),
 	connect(mapStateToProps, mapDispatchToProps)
-)(IngredientList);
+)(IngredientListContainer);
