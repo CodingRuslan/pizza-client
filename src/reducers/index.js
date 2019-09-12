@@ -1,10 +1,11 @@
 
  const initialState = {
+	 isLoggedIn: false,
 	 ingredients: [],
 	 loading: true,
 	 error: null,
 	 cartItems: [],
-	 orderTotal: 45
+	 orderTotal: 0
  };
 
 const updateCartItems = (cartItems, item, idx) => {
@@ -30,26 +31,30 @@ const updateCartItems = (cartItems, item, idx) => {
 	];
 };
 
+const updateTotalOrder = (ingredient, orderTotal, quantity) => {
+	return orderTotal + quantity * ingredient.timeCook
+};
+
 const updateCartItem = (ingredient, item, quantity) => {
 
 	if (item) {
 		return  {
 			...item,
 			count: item.count + quantity,
-			time: item.time + quantity * ingredient.timeCook
+			time: item.time + quantity * ingredient.timeCook,
 		};
 	} else {
 		return {
 			id: ingredient.id,
 			name: ingredient.name,
 			count: 1,
-			time: ingredient.timeCook
+			time: ingredient.timeCook,
 		};
 	}
 };
 
 const updateOrder = (state, ingredientId, quantity) => {
-	const { ingredients, cartItems} = state;
+	const { ingredients, cartItems, orderTotal} = state;
 	const ingredient = ingredients.find((ingredient) => ingredient.id === ingredientId);
 
 	const itemIndex = cartItems.findIndex((ingredient) => ingredient.id === ingredientId);
@@ -58,7 +63,8 @@ const updateOrder = (state, ingredientId, quantity) => {
 
 	return {
 		...state,
-		cartItems: updateCartItems(cartItems, newItem, itemIndex)
+		cartItems: updateCartItems(cartItems, newItem, itemIndex),
+		orderTotal: updateTotalOrder(ingredient, orderTotal, quantity)
 	};
 };
 

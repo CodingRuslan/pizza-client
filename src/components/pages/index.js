@@ -1,7 +1,11 @@
-import CartPage from "./cart-page";
+import HistoryPage from "./history-page";
 import HomePage from "./home-page";
+import LoginPage from "./login-page";
+import RegistrationPage from "./registration-page";
 
 export {
-	CartPage,
-	HomePage
+	HomePage,
+	HistoryPage,
+	LoginPage,
+	RegistrationPage
 }

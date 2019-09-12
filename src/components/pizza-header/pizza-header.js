@@ -1,21 +1,19 @@
 import React from 'react';
-import { Link} from "react-router-dom";
 import './pizza-header.css';
 
-const PizzaHeader = ({ numItems, total }) => {
+const PizzaHeader = () => {
 	return (
-		<header className="pizza-header row">
-			<Link to='/'>
-				<div className="logo text-dark" href="#"><i className="fa fa-empire" />GR:pizza</div>
-			</Link>
-			<Link to="/cart">
-				<div className="shopping-cart">
-					<i className="cart-icon fa fa-shopping-cart" />
-					{numItems} items ({total}sec)
+	<header className="masthead">
+		<div className="container h-100">
+			<div className="row h-100 align-items-center">
+				<div className="col-12 text-center">
+					{/*<h1 className="font-weight-light"><i className="fa fa-empire" />GR:pizza</h1>*/}
+					{/*<p className="lead">The best pizza you can find </p>*/}
 				</div>
-		</Link>
-		</header>
-	);
+			</div>
+		</div>
+	</header>
+	)
 };
 
 export default PizzaHeader;

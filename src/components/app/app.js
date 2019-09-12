@@ -1,27 +1,57 @@
 import React from 'react';
-import { Route, Switch} from 'react-router-dom';
-import PizzaHeader from "../pizza-header";
-import { HomePage, CartPage} from '../pages'
+import { Route, Switch, Redirect } from 'react-router-dom';
+import { HomePage, HistoryPage, LoginPage, RegistrationPage} from '../pages'
 import './app.css'
+import Navbar from "../navbar";
+import {connect} from "react-redux";
 
-const App = () => {
+const App = ({isLoggedIn}) => {
 	return (
 		<main role='main' className='container'>
-			<PizzaHeader numItems={5} total={210}/>
+			<Navbar/>
+
 			<Switch>
+				<Route exact path="/" render={() => (
+					isLoggedIn ? (
+						<Route
+							path='/'
+							component={HomePage}
+							exact
+						/>
+					) : (
+						<Redirect to="/login"/>
+					)
+				)}/>
+
+				<Route path="/history" render={() => (
+					isLoggedIn ? (
+						<Route
+							path='/history'
+							component={HistoryPage}
+						/>
+					) : (
+						<Redirect to="/login"/>
+					)
+				)}/>
+
 				<Route
-					path='/'
-					component={HomePage}
-					exact
+					path='/registration'
+					component={RegistrationPage}
 				/>
 
 				<Route
-					path='/cart'
-					component={CartPage}
+					path='/login'
+					component={LoginPage}
 				/>
+
+
 			</Switch>
 		</main>
 	)
 };
 
-export default App;
+const mapStateToProps = ({ isLoggedIn }) => {
+	return { isLoggedIn }
+};
+
+export default connect(mapStateToProps)(App);
