@@ -3,19 +3,38 @@ const axios = require('axios');
 const _apiBase = 'http://localhost:8080';
 export default class PizzaService {
 
-	// getResource = async (url) => {
-	// 	const res = await fetch(`${this._apiBase}${url}`);
-	//
-	// 	if (!res.ok) {
-	// 		throw new Error('Could not fetch')
-	// 	}
-	// 	return await res.json();
-	// };
-	//
-	// getIngredients = async () => {
-	// 	const res = await this.getResource('/ingredients/');
-	// 	return await res.map(this._transformIngredients);
-	// };
+	logIn = async (login, pass) => {
+			let curr = "";
+			const res = await axios.post(`${_apiBase}/login/`, {
+				"login": login + curr,
+				"password": pass + curr
+			})
+				.then(function (response) {
+					return response;
+				})
+				.catch(function (error) {
+					console.log(error);
+				});
+			console.log(res);
+			return res
+	};
+
+	registration = async (login, pass) => {
+		let curr = "";
+		const res = await axios.post(`${_apiBase}/registration/`, {
+			"login": login + curr,
+			"password": pass + curr
+		})
+			.then(function (response) {
+				return response;
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+		console.log(res);
+		return res
+
+	};
 
 	getIngredients = async () => {
 		try {
@@ -25,7 +44,6 @@ export default class PizzaService {
 			console.error(error);
 		}
 	};
-
 
 	_transformIngredients= (ingredient) => {
 		return {

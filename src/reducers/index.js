@@ -1,12 +1,15 @@
 
  const initialState = {
 	 isLoggedIn: false,
+	 loginName: '',
 	 ingredients: [],
 	 loading: true,
 	 error: null,
 	 cartItems: [],
 	 orderTotal: 0
  };
+
+
 
 const updateCartItems = (cartItems, item, idx) => {
 
@@ -71,6 +74,44 @@ const updateOrder = (state, ingredientId, quantity) => {
 const reducer = (state = initialState, action) => {
 
 	switch (action.type) {
+
+		case "POST_USER_CREATE":
+			window.alert('Вы зарегистрированы');
+			return {
+				...state,
+			};
+
+		case "POST_LOGIN_SUCCESS":
+			return {
+				...state,
+				loginName: action.payload,
+				isLoggedIn: true,
+				loading: false,
+				error: null
+			};
+
+		case "POST_LOGIN_FAILURE":
+			return {
+				...state,
+				loginName: '',
+				isLoggedIn: false,
+				loading: false,
+				error: action.payload
+			};
+
+		case "POST_LOGIN_WRONG":
+			window.alert(action.payload);
+			return {
+				...state,
+			};
+
+		case "FETCH_LOG_OUT":
+			return {
+				...state,
+				loginName: '',
+				isLoggedIn: false,
+			};
+
 		case "FETCH_INGREDIENTS_REQUEST":
 			return {
 				...state,

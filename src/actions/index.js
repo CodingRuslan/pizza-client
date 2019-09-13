@@ -1,4 +1,37 @@
 
+const registrationUser = () => {
+	return {
+		type: "POST_USER_CREATE",
+	}
+};
+
+const correctLogin = (login) => {
+	return {
+		type: 'POST_LOGIN_SUCCESS',
+		payload: login
+	};
+};
+
+const wrongLogin = () => {
+	return {
+		type: 'POST_LOGIN_WRONG',
+		payload: 'Неправильный логин или пароль'
+	};
+};
+
+export const logOut = () => {
+	return {
+		type: 'FETCH_LOG_OUT',
+	};
+};
+
+const loginError = (error) => {
+	return {
+		type: "POST_LOGIN_FAILURE",
+		payload: error
+	}
+};
+
 const ingredientsRequested = () => {
 	return {
 		type: 'FETCH_INGREDIENTS_REQUEST'
@@ -47,6 +80,32 @@ const fetchIngredients = (pizzaService, dispatch) => () => {
 		.catch((err) => dispatch(ingredientsError(err)));
 };
 
+const fetchLogin = (pizzaService, dispatch) => (login, pass) => {
+	pizzaService.logIn(login, pass)
+		.then(e => {
+			if (e.data.length > 0){
+				dispatch(correctLogin(e.data))
+			} else {
+				dispatch(wrongLogin());
+			}
+		})
+		.catch((err) => dispatch(loginError(err)));
+};
+
+const fetchRegistration = (pizzaService, dispatch) => (login, pass) => {
+	pizzaService.registration(login, pass)
+		.then(e => {
+			if (e.data.length > 0){
+				dispatch(registrationUser())
+			} else {
+				dispatch(wrongLogin());
+			}
+		})
+		.catch((err) => dispatch(loginError(err)));
+};
+
 export {
-	fetchIngredients
+	fetchIngredients,
+	fetchLogin,
+	fetchRegistration
 }
