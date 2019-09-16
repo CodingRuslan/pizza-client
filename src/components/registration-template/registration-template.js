@@ -48,7 +48,7 @@ class RegistrationTemplate extends React.Component {
 
 								<button onClick={(e) => {
 									if (this.state.login === undefined || this.state.password === undefined) {
-										e.preventDefault();
+										// e.preventDefault();
 										alert('Заполните данные')
 									} else {
 										if (temp === 'login') {
@@ -56,7 +56,6 @@ class RegistrationTemplate extends React.Component {
 										} else {
 											this.props.fetchRegistration(this.state.login,this.state.password);
 										}
-
 									}
 								}
 								} className="btn btn-lg btn-primary btn-block text-uppercase" type="submit">{temp}</button>
@@ -76,8 +75,8 @@ class RegistrationTemplate extends React.Component {
 	}
 }
 
-const mapStateToProps = ({ isLoggedIn, loginName, error }) => {
-	return { isLoggedIn, loginName, error }
+const mapStateToProps = ({ isLoggedIn, loginName }) => {
+	return { isLoggedIn, loginName }
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {

@@ -1,7 +1,8 @@
 
-const registrationUser = () => {
+const registrationUser = (data) => {
 	return {
 		type: "POST_USER_CREATE",
+		payload: data
 	}
 };
 
@@ -95,11 +96,7 @@ const fetchLogin = (pizzaService, dispatch) => (login, pass) => {
 const fetchRegistration = (pizzaService, dispatch) => (login, pass) => {
 	pizzaService.registration(login, pass)
 		.then(e => {
-			if (e.data.length > 0){
-				dispatch(registrationUser())
-			} else {
-				dispatch(wrongLogin());
-			}
+			dispatch(registrationUser(e.data))
 		})
 		.catch((err) => dispatch(loginError(err)));
 };

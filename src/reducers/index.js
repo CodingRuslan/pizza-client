@@ -76,12 +76,13 @@ const reducer = (state = initialState, action) => {
 	switch (action.type) {
 
 		case "POST_USER_CREATE":
-			window.alert('Вы зарегистрированы');
+			window.alert(action.payload);
 			return {
 				...state,
 			};
 
 		case "POST_LOGIN_SUCCESS":
+			window.alert('Теперь вы можете сделать заказ');
 			return {
 				...state,
 				loginName: action.payload,

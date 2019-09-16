@@ -4,10 +4,9 @@ const _apiBase = 'http://localhost:8080';
 export default class PizzaService {
 
 	logIn = async (login, pass) => {
-			let curr = "";
 			const res = await axios.post(`${_apiBase}/login/`, {
-				"login": login + curr,
-				"password": pass + curr
+				"login": login,
+				"password": pass
 			})
 				.then(function (response) {
 					return response;
@@ -20,10 +19,9 @@ export default class PizzaService {
 	};
 
 	registration = async (login, pass) => {
-		let curr = "";
 		const res = await axios.post(`${_apiBase}/registration/`, {
-			"login": login + curr,
-			"password": pass + curr
+			"login": login,
+			"password": pass
 		})
 			.then(function (response) {
 				return response;
