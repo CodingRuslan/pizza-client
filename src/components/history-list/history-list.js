@@ -39,11 +39,11 @@ class HistoryList extends Component{
 								<div className="card h-100">
 									<div className="card-body">
 										<h4 className="card-title">
-											<a href="#">Заказ номер {idclientOrder}</a>
+											<a href="#">Order number: {idclientOrder}</a>
 										</h4>
-										<p className="card-text">Время приготовления: {timeCooking} сек</p>
-										<p className="card-text">Статус заказа: {orderDone ? <span className="badge badge-success">Готов</span> :
-											<span className="badge badge-warning">В обработке</span>}</p>
+										<p className="card-text">Time for preparing: {timeCooking} сек</p>
+										<p className="card-text">Order status: {orderDone ? <span className="badge badge-success">Ready</span> :
+											<span className="badge badge-warning">In processing</span>}</p>
 									</div>
 								</div>
 							</div>
