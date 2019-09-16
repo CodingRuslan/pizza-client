@@ -43,6 +43,15 @@ export default class PizzaService {
 		}
 	};
 
+	getHistoryItems = async (userId) => {
+		try {
+			const response = await axios.get(`${_apiBase}/orders/${userId}/`);
+			return response.data
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
 	_transformIngredients= (ingredient) => {
 		return {
 			id: ingredient.idingredients,

@@ -2,11 +2,13 @@
  const initialState = {
 	 isLoggedIn: false,
 	 loginName: '',
+	 userId: null,
 	 ingredients: [],
 	 loading: true,
 	 error: null,
 	 cartItems: [],
-	 orderTotal: 0
+	 orderTotal: 0,
+	 historyItems: []
  };
 
 
@@ -85,7 +87,8 @@ const reducer = (state = initialState, action) => {
 			window.alert('Теперь вы можете сделать заказ');
 			return {
 				...state,
-				loginName: action.payload,
+				loginName: action.payload[0],
+				userId: action.payload[1],
 				isLoggedIn: true,
 				loading: false,
 				error: null
@@ -133,6 +136,30 @@ const reducer = (state = initialState, action) => {
 			return {
 				...state,
 				ingredients: [],
+				loading: false,
+				error: action.payload
+			};
+
+		case "FETCH_HISTORY_ITEMS_REQUEST":
+			return {
+				...state,
+				historyItems: [],
+				loading: true,
+				error: null
+			};
+
+		case "FETCH_HISTORY_ITEMS_SUCCESS":
+			return {
+				...state,
+				historyItems: action.payload,
+				loading: false,
+				error: null
+			};
+
+		case "FETCH_HISTORY_ITEMS_FAILURE":
+			return {
+				...state,
+				historyItems: [],
 				loading: false,
 				error: action.payload
 			};

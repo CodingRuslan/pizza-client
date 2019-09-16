@@ -6,10 +6,10 @@ const registrationUser = (data) => {
 	}
 };
 
-const correctLogin = (login) => {
+const correctLogin = (...args) => {
 	return {
 		type: 'POST_LOGIN_SUCCESS',
-		payload: login
+		payload: args
 	};
 };
 
@@ -53,6 +53,26 @@ const ingredientsError = (error) => {
 	}
 };
 
+const historyItemsRequested = () => {
+	return {
+		type: 'FETCH_HISTORY_ITEMS_REQUEST'
+	}
+};
+
+const historyItemsLoaded = (newHistoryItems) => {
+	return {
+		type: 'FETCH_HISTORY_ITEMS_SUCCESS',
+		payload: newHistoryItems
+	};
+};
+
+const historyItemsError = (error) => {
+	return {
+		type: "FETCH_HISTORY_ITEMS_FAILURE",
+		payload: error
+	}
+};
+
 export const ingredientAddedToCart = (ingredientId) => {
 	return {
 		type: 'INGREDIENT_ADDED_TO_CART',
@@ -81,11 +101,18 @@ const fetchIngredients = (pizzaService, dispatch) => () => {
 		.catch((err) => dispatch(ingredientsError(err)));
 };
 
+const fetchHistoryItems = (pizzaService, dispatch) => (userId) => {
+	dispatch(historyItemsRequested());
+	pizzaService.getHistoryItems(userId)
+		.then(e => dispatch(historyItemsLoaded(e)))
+		.catch((err) => dispatch(historyItemsError(err)));
+};
+
 const fetchLogin = (pizzaService, dispatch) => (login, pass) => {
 	pizzaService.logIn(login, pass)
 		.then(e => {
-			if (e.data.length > 0){
-				dispatch(correctLogin(e.data))
+			if (e.data.login.length > 0){
+				dispatch(correctLogin(e.data.login, e.data.idusers))
 			} else {
 				dispatch(wrongLogin());
 			}
@@ -103,6 +130,7 @@ const fetchRegistration = (pizzaService, dispatch) => (login, pass) => {
 
 export {
 	fetchIngredients,
+	fetchHistoryItems,
 	fetchLogin,
 	fetchRegistration
 }
