@@ -73,6 +73,19 @@ const updateOrder = (state, ingredientId, quantity) => {
 	};
 };
 
+const checkAuth = (state) => {
+	const id = localStorage.getItem('userId');
+	const login = localStorage.getItem('loginName');
+	if (login && id) {
+		return {
+			...state,
+			loginName: login,
+			userId: id,
+			isLoggedIn: true
+		};
+	} else return state
+};
+
 const reducer = (state = initialState, action) => {
 
 	switch (action.type) {
@@ -85,6 +98,8 @@ const reducer = (state = initialState, action) => {
 
 		case "POST_LOGIN_SUCCESS":
 			window.alert('Теперь вы можете сделать заказ');
+			localStorage.setItem('userId', action.payload[1]);
+			localStorage.setItem('loginName', action.payload[0]);
 			return {
 				...state,
 				loginName: action.payload[0],
@@ -93,6 +108,9 @@ const reducer = (state = initialState, action) => {
 				loading: false,
 				error: null
 			};
+
+		case "CHECK_AUTHENTICATION_FROM_LOCAL_STORAGE":
+			return checkAuth(state);
 
 		case "POST_LOGIN_FAILURE":
 			return {
@@ -110,6 +128,7 @@ const reducer = (state = initialState, action) => {
 			};
 
 		case "FETCH_LOG_OUT":
+			localStorage.clear();
 			return {
 				...state,
 				loginName: '',

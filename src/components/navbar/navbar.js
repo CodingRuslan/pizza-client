@@ -4,6 +4,7 @@ import './navbar.css';
 import {connect} from "react-redux";
 
 import {
+	checkAuthenticationFromLocalStorage,
 	logOut
 } from "../../actions";
 
@@ -35,7 +36,15 @@ const LogOutBar = ({logOut} ) => {
 	)
 };
 
-const Navbar = ({isLoggedIn, loginName, logOut}) => {
+class Navbar extends React.Component {
+
+	componentDidMount() {
+		this.props.checkAuthenticationFromLocalStorage();
+	}
+
+	render () {
+		const {isLoggedIn, loginName, logOut} = this.props;
+
 	return (
 		<nav className="navbar navbar-expand-sm navbar-light bg-light">
 			<div className="container">
@@ -61,6 +70,7 @@ const Navbar = ({isLoggedIn, loginName, logOut}) => {
 			</div>
 		</nav>
 	)
+}
 };
 
 const mapStateToProps = ({ loginName, isLoggedIn }) => {
@@ -68,7 +78,8 @@ const mapStateToProps = ({ loginName, isLoggedIn }) => {
 };
 
 const mapDispatchToProps = {
-	logOut: logOut,
+	logOut,
+	checkAuthenticationFromLocalStorage
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

@@ -41,7 +41,7 @@ class HistoryList extends Component{
 										<h4 className="card-title">
 											<a href="#">Order number: {idclientOrder}</a>
 										</h4>
-										<p className="card-text">Time for preparing: {timeCooking} сек</p>
+										<p className="card-text">Time for preparing: {timeCooking} sec</p>
 										<p className="card-text">Order status: {orderDone ? <span className="badge badge-success">Ready</span> :
 											<span className="badge badge-warning">In processing</span>}</p>
 									</div>

@@ -4,6 +4,7 @@ import './registration-template.css'
 import {compose} from "../../utils";
 import {withPizzaService} from "../hoc";
 import {connect} from "react-redux";
+import { Redirect } from 'react-router-dom'
 import {fetchLogin, fetchRegistration} from "../../actions";
 
 class RegistrationTemplate extends React.Component {
@@ -14,7 +15,12 @@ class RegistrationTemplate extends React.Component {
 	};
 
 	render() {
-		const {temp} = this.props;
+		const {temp, isLoggedIn} = this.props;
+		if (isLoggedIn) {
+			return (
+				<Redirect to='/'/>
+			)
+		}
 		return (
 			<div className="container">
 			<div className="row">
@@ -60,6 +66,7 @@ class RegistrationTemplate extends React.Component {
 								}
 								} className="btn btn-lg btn-primary btn-block text-uppercase" type="submit">{temp}</button>
 								<hr className="my-4"/>
+
 								{/*<button className="btn btn-lg btn-google btn-block text-uppercase" type="submit">*/}
 								{/*	<i className="fa fa-google mr-2"></i> Sign in with Google*/}
 								{/*</button>*/}
@@ -83,7 +90,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 	const { pizzaService } = ownProps;
 	return {
 		fetchLogin: fetchLogin(pizzaService, dispatch),
-		fetchRegistration: fetchRegistration(pizzaService, dispatch)
+		fetchRegistration: fetchRegistration(pizzaService, dispatch),
 	}
 };
 
@@ -91,5 +98,3 @@ export default compose(
 	withPizzaService(),
 	connect(mapStateToProps, mapDispatchToProps)
 )(RegistrationTemplate);
-
-// export default RegistrationTemplate;

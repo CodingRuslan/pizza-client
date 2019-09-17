@@ -6,6 +6,12 @@ const registrationUser = (data) => {
 	}
 };
 
+export const checkAuthenticationFromLocalStorage = () => {
+		return {
+			type: 'CHECK_AUTHENTICATION_FROM_LOCAL_STORAGE',
+	}
+};
+
 const correctLogin = (...args) => {
 	return {
 		type: 'POST_LOGIN_SUCCESS',

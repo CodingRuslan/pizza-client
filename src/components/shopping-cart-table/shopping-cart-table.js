@@ -57,6 +57,7 @@ const ShoppingCartTable = ({ items, total, onIncrease, onDecrease, onDelete}) =>
 			</table>
 
 			<div className="total">
+				<button type="button"  className="btn btn-success">Make an order.</button>
 				Total: {total} sec
 			</div>
 		</div>
