@@ -1,5 +1,5 @@
-import pizzaService from '../services/pizza-service';
-
+import PizzaService from '../services/pizza-service';
+const pizzaService = new PizzaService();
 
 const registrationUser = (data) => {
 	return {
@@ -122,21 +122,21 @@ export const allIngredientRemoveFromCart = (ingredientId) => {
 	}
 };
 
-const fetchIngredients = (pizzaService, dispatch) => () => {
+const fetchIngredients = () => (dispatch) => {
 	dispatch(ingredientsRequested());
 	pizzaService.getIngredients()
 		.then(e => dispatch(ingredientsLoaded(e)))
 		.catch((err) => dispatch(ingredientsError(err)));
 };
 
-const fetchHistoryItems = (pizzaService, dispatch) => (userId) => {
+const fetchHistoryItems = (userId) => (dispatch) => {
 	dispatch(historyItemsRequested());
 	pizzaService.getHistoryItems(userId)
 		.then(e => dispatch(historyItemsLoaded(e)))
 		.catch((err) => dispatch(historyItemsError(err)));
 };
 
-const fetchLogin = (pizzaService, dispatch) => (login, pass) => {
+const fetchLogin = (login, pass) => (dispatch) => {
 	pizzaService.logIn(login, pass)
 		.then(e => {
 			if (e.data.login.length > 0){
@@ -148,7 +148,7 @@ const fetchLogin = (pizzaService, dispatch) => (login, pass) => {
 		.catch((err) => dispatch(loginError(err)));
 };
 
-const fetchRegistration = (pizzaService, dispatch) => (login, pass) => {
+const fetchRegistration = (login, pass) => (dispatch) => {
 	pizzaService.registration(login, pass)
 		.then(e => {
 			dispatch(registrationUser(e.data))
@@ -156,7 +156,7 @@ const fetchRegistration = (pizzaService, dispatch) => (login, pass) => {
 		.catch((err) => dispatch(loginError(err)));
 };
 
-const fetchMakeOrder = (pizzaService, dispatch) => (userId, cartItems) => {
+const fetchMakeOrder = (userId, cartItems) => (dispatch) => {
 	pizzaService.makeOrder(userId, cartItems)
 		.then(e => {
 			dispatch(orderIsReady(e.data))

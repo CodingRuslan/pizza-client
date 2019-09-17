@@ -11,7 +11,7 @@ import {
 import {compose} from "../../utils";
 import {withPizzaService} from "../hoc";
 
-const ShoppingCartTable = ({ items, total, userId, onIncrease, onDecrease, onDelete, fetchMakeOrder}) => {
+const ShoppingCartTable = ({ items, total, userId, ingredientRemoveFromCart, ingredientAddedToCart, allIngredientRemoveFromCart, fetchMakeOrder}) => {
 	const renderRow = (item, idx) => {
 		const {id, name, count, time} = item;
 		return (
@@ -22,17 +22,17 @@ const ShoppingCartTable = ({ items, total, userId, onIncrease, onDecrease, onDel
 				<td>{time} sec</td>
 				<td>
 					<button
-						onClick={() => onDelete(id)}
+						onClick={() => allIngredientRemoveFromCart(id)}
 						className="btn btn-outline-danger btn-sm float-right">
 						<i className="fa fa-trash-o" />
 					</button>
 					<button
-						onClick={() => { onIncrease(id)}}
+						onClick={() => { ingredientAddedToCart(id)}}
 						className="btn btn-outline-success btn-sm float-right">
 						<i className="fa fa-plus-circle" />
 					</button>
 					<button
-						onClick={() => onDecrease(id)}
+						onClick={() => ingredientRemoveFromCart(id)}
 						className="btn btn-outline-warning btn-sm float-right">
 						<i className="fa fa-minus-circle" />
 					</button>
@@ -76,24 +76,7 @@ const mapStateToProps = ({ cartItems, orderTotal, userId }) => {
 	}
 };
 
-// const mapDispatchToProps = {
-// 	onIncrease: ingredientAddedToCart,
-// 	onDecrease: ingredientRemoveFromCart,
-// 	onDelete: allIngredientRemoveFromCart,
-// 	fetchMakeOrder
-// };
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-	const { pizzaService } = ownProps;
-	return {
-		onIncrease: (id) => dispatch(ingredientAddedToCart(id)),
-		onDecrease: (id) => dispatch(ingredientRemoveFromCart(id)),
-		onDelete: (id) => dispatch(allIngredientRemoveFromCart(id)),
-		fetchMakeOrder: fetchMakeOrder(pizzaService, dispatch),
-	}
-};
-
 export default compose(
 	withPizzaService(),
-	connect(mapStateToProps, mapDispatchToProps)
+	connect(mapStateToProps, {ingredientAddedToCart, ingredientRemoveFromCart, allIngredientRemoveFromCart, fetchMakeOrder})
 )(ShoppingCartTable);

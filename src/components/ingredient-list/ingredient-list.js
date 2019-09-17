@@ -35,7 +35,7 @@ class IngredientListContainer extends Component {
 	}
 
 	render() {
-		const {ingredients, loading, error, onAddedToCart} = this.props;
+		const {ingredients, loading, error, ingredientAddedToCart} = this.props;
 
 		if (loading) {
 			return <Spinner/>
@@ -45,7 +45,7 @@ class IngredientListContainer extends Component {
 			return <ErrorIndicator/>
 		}
 
-		return <IngredientList ingredients={ingredients} onAddedToCart={onAddedToCart}/>
+		return <IngredientList ingredients={ingredients} onAddedToCart={ingredientAddedToCart}/>
 	}
 }
 
@@ -53,16 +53,7 @@ const mapStateToProps = ({ ingredients, loading, error }) => {
 	return { ingredients, loading, error }
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-	console.log('called mdtp');
-	const { pizzaService } = ownProps;
-	return {
-		fetchIngredients: fetchIngredients(pizzaService, dispatch),
-		onAddedToCart: (id) => dispatch(ingredientAddedToCart(id))
-	}
-};
-
 export default compose(
 	withPizzaService(),
-	connect(mapStateToProps, mapDispatchToProps)
+	connect(mapStateToProps, {fetchIngredients, ingredientAddedToCart})
 )(IngredientListContainer);

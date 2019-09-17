@@ -60,14 +60,7 @@ const mapStateToProps = ({ historyItems, userId, loading, error }) => {
 	return { historyItems, userId, loading, error }
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-	const { pizzaService } = ownProps;
-	return {
-		fetchHistoryItems: fetchHistoryItems(pizzaService, dispatch),
-	}
-};
-
 export default compose(
 	withPizzaService(),
-	connect(mapStateToProps, mapDispatchToProps)
+	connect(mapStateToProps, {fetchHistoryItems})
 )(HistoryList);

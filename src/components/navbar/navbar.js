@@ -71,7 +71,7 @@ class Navbar extends React.Component {
 		</nav>
 	)
 }
-};
+}
 
 const mapStateToProps = ({ loginName, isLoggedIn }) => {
 	return { loginName, isLoggedIn }

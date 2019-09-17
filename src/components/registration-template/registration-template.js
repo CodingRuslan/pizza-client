@@ -86,15 +86,7 @@ const mapStateToProps = ({ isLoggedIn, loginName }) => {
 	return { isLoggedIn, loginName }
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-	const { pizzaService } = ownProps;
-	return {
-		fetchLogin: fetchLogin(pizzaService, dispatch),
-		fetchRegistration: fetchRegistration(pizzaService, dispatch),
-	}
-};
-
 export default compose(
 	withPizzaService(),
-	connect(mapStateToProps, mapDispatchToProps)
+	connect(mapStateToProps, {fetchLogin, fetchRegistration})
 )(RegistrationTemplate);

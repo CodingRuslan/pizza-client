@@ -32,9 +32,13 @@ export default class PizzaService {
 	};
 
 	makeOrder = async (userId, cartItems) => {
-		const transformCartItems = cartItems.map((e) => {
-			return e.id
+		const transformCartItems = [];
+		cartItems.forEach((e) => {
+			for (let i = 0; i < e.count; i++) {
+				transformCartItems.push(e.id)
+			}
 		});
+
 		const res = await axios.post(`${_apiBase}/neworder/`, {
 			"userId": userId,
 			"cartItems": transformCartItems
