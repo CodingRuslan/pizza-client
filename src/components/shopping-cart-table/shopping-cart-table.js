@@ -86,9 +86,9 @@ const mapStateToProps = ({ cartItems, orderTotal, userId }) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
 	const { pizzaService } = ownProps;
 	return {
-		onIncrease: ingredientAddedToCart,
-		onDecrease: ingredientRemoveFromCart,
-		onDelete: allIngredientRemoveFromCart,
+		onIncrease: (id) => dispatch(ingredientAddedToCart(id)),
+		onDecrease: (id) => dispatch(ingredientRemoveFromCart(id)),
+		onDelete: (id) => dispatch(allIngredientRemoveFromCart(id)),
 		fetchMakeOrder: fetchMakeOrder(pizzaService, dispatch),
 	}
 };
