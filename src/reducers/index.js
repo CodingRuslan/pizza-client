@@ -183,6 +183,27 @@ const reducer = (state = initialState, action) => {
 				error: action.payload
 			};
 
+		case 'MAKE_NEW_ORDER_REQUEST':
+			window.alert('Ваш заказ отрпавлен в обработку');
+			return {
+				...state,
+				cartItems: [],
+				orderTotal: 0
+			};
+
+		case "MAKE_NEW_ORDER_SUCCESS":
+			window.alert(`Заказ номер ${action.payload} готов `);
+			return {
+				...state,
+			};
+
+		case "MAKE_NEW_ORDER_FAILURE":
+			return {
+				...state,
+				cartItems: [],
+				error: action.payload
+			};
+
 		case 'INGREDIENT_ADDED_TO_CART':
 			return updateOrder(state, action.payload, 1);
 

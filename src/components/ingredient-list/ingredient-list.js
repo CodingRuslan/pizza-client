@@ -54,6 +54,7 @@ const mapStateToProps = ({ ingredients, loading, error }) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
+	console.log('called mdtp');
 	const { pizzaService } = ownProps;
 	return {
 		fetchIngredients: fetchIngredients(pizzaService, dispatch),

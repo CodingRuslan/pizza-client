@@ -14,7 +14,6 @@ export default class PizzaService {
 				.catch(function (error) {
 					console.log(error);
 				});
-			console.log(res);
 			return res
 	};
 
@@ -29,9 +28,24 @@ export default class PizzaService {
 			.catch(function (error) {
 				console.log(error);
 			});
-		console.log(res);
 		return res
+	};
 
+	makeOrder = async (userId, cartItems) => {
+		const transformCartItems = cartItems.map((e) => {
+			return e.id
+		});
+		const res = await axios.post(`${_apiBase}/neworder/`, {
+			"userId": userId,
+			"cartItems": transformCartItems
+		})
+			.then(function (response) {
+				return response;
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+		return res
 	};
 
 	getIngredients = async () => {

@@ -5,9 +5,13 @@ import {connect} from "react-redux";
 import {
 	ingredientAddedToCart,
 	ingredientRemoveFromCart,
-	allIngredientRemoveFromCart } from "../../actions";
+	allIngredientRemoveFromCart,
+	fetchMakeOrder,
+} from "../../actions";
+import {compose} from "../../utils";
+import {withPizzaService} from "../hoc";
 
-const ShoppingCartTable = ({ items, total, onIncrease, onDecrease, onDelete}) => {
+const ShoppingCartTable = ({ items, total, userId, onIncrease, onDecrease, onDelete, fetchMakeOrder}) => {
 	const renderRow = (item, idx) => {
 		const {id, name, count, time} = item;
 		return (
@@ -23,7 +27,7 @@ const ShoppingCartTable = ({ items, total, onIncrease, onDecrease, onDelete}) =>
 						<i className="fa fa-trash-o" />
 					</button>
 					<button
-						onClick={() => onIncrease(id)}
+						onClick={() => { onIncrease(id)}}
 						className="btn btn-outline-success btn-sm float-right">
 						<i className="fa fa-plus-circle" />
 					</button>
@@ -57,24 +61,39 @@ const ShoppingCartTable = ({ items, total, onIncrease, onDecrease, onDelete}) =>
 			</table>
 
 			<div className="total">
-				<button type="button"  className="btn btn-success">Make an order.</button>
+				<button type="button" onClick={() => fetchMakeOrder(userId, items)} className="btn btn-success">Make an order.</button>
 				Total: {total} sec
 			</div>
 		</div>
 	);
 };
 
-const mapStateToProps = ({ cartItems, orderTotal }) => {
+const mapStateToProps = ({ cartItems, orderTotal, userId }) => {
 	return {
 		items: cartItems,
-		total: orderTotal
+		total: orderTotal,
+		userId: userId
 	}
 };
 
-const mapDispatchToProps = {
-	onIncrease: ingredientAddedToCart,
-	onDecrease: ingredientRemoveFromCart,
-	onDelete: allIngredientRemoveFromCart,
+// const mapDispatchToProps = {
+// 	onIncrease: ingredientAddedToCart,
+// 	onDecrease: ingredientRemoveFromCart,
+// 	onDelete: allIngredientRemoveFromCart,
+// 	fetchMakeOrder
+// };
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+	const { pizzaService } = ownProps;
+	return {
+		onIncrease: ingredientAddedToCart,
+		onDecrease: ingredientRemoveFromCart,
+		onDelete: allIngredientRemoveFromCart,
+		fetchMakeOrder: fetchMakeOrder(pizzaService, dispatch),
+	}
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShoppingCartTable);
+export default compose(
+	withPizzaService(),
+	connect(mapStateToProps, mapDispatchToProps)
+)(ShoppingCartTable);

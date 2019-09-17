@@ -1,3 +1,5 @@
+import pizzaService from '../services/pizza-service';
+
 
 const registrationUser = (data) => {
 	return {
@@ -79,6 +81,26 @@ const historyItemsError = (error) => {
 	}
 };
 
+const orderPlaced = () => {
+	return {
+		type: 'MAKE_NEW_ORDER_REQUEST'
+	}
+};
+
+const orderIsReady = (newOrder) => {
+	return {
+		type: 'MAKE_NEW_ORDER_SUCCESS',
+		payload: newOrder
+	};
+};
+
+const orderError = (error) => {
+	return {
+		type: "MAKE_NEW_ORDER_FAILURE",
+		payload: error
+	}
+};
+
 export const ingredientAddedToCart = (ingredientId) => {
 	return {
 		type: 'INGREDIENT_ADDED_TO_CART',
@@ -134,9 +156,19 @@ const fetchRegistration = (pizzaService, dispatch) => (login, pass) => {
 		.catch((err) => dispatch(loginError(err)));
 };
 
+const fetchMakeOrder = (pizzaService, dispatch) => (userId, cartItems) => {
+	pizzaService.makeOrder(userId, cartItems)
+		.then(e => {
+			dispatch(orderIsReady(e.data))
+		})
+		.catch((err) => dispatch(orderError(err)));
+	dispatch(orderPlaced());
+};
+
 export {
 	fetchIngredients,
 	fetchHistoryItems,
 	fetchLogin,
-	fetchRegistration
+	fetchRegistration,
+	fetchMakeOrder
 }
