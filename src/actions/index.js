@@ -156,8 +156,8 @@ const fetchRegistration = (login, pass) => (dispatch) => {
 		.catch((err) => dispatch(loginError(err)));
 };
 
-const fetchMakeOrder = (userId, cartItems) => (dispatch) => {
-	pizzaService.makeOrder(userId, cartItems)
+const fetchMakeOrder = (userId, cartItems, orderTotal) => (dispatch) => {
+	pizzaService.makeOrder(userId, cartItems, orderTotal)
 		.then(e => {
 			dispatch(orderIsReady(e.data))
 		})

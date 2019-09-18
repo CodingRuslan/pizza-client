@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
+import { Link } from "react-router-dom";
 
 import './history-list.css'
 import {fetchHistoryItems} from "../../actions";
@@ -39,7 +40,9 @@ class HistoryList extends Component{
 								<div className="card h-100">
 									<div className="card-body">
 										<h4 className="card-title">
-											<a href="#">Order number: {idclientOrder}</a>
+											<Link to="#">
+											Order number: {idclientOrder}
+											</Link>
 										</h4>
 										<p className="card-text">Time for preparing: {timeCooking} sec</p>
 										<p className="card-text">Order status: {orderDone ? <span className="badge badge-success">Ready</span> :

@@ -61,7 +61,7 @@ const ShoppingCartTable = ({ items, total, userId, ingredientRemoveFromCart, ing
 			</table>
 
 			<div className="total">
-				<button type="button" onClick={() => fetchMakeOrder(userId, items)} className="btn btn-success">Make an order.</button>
+				<button type="button" onClick={() => fetchMakeOrder(userId, items, total)} className="btn btn-success">Make an order.</button>
 				Total: {total} sec
 			</div>
 		</div>
