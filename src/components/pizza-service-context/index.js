@@ -1,6 +1,6 @@
-import { PizzaServiceProvider, PizzaServiceConsumer} from "./pizza-service-context";
+import { PizzaServiceProvider, PizzaServiceConsumer } from './pizza-service-context';
 
 export {
-	PizzaServiceProvider,
-	PizzaServiceConsumer
-}
+  PizzaServiceProvider,
+  PizzaServiceConsumer,
+};

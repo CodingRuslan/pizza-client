@@ -1,10 +1,8 @@
 import React from 'react';
-import RegistrationTemplate from "../registration-template";
+import RegistrationTemplate from '../registration-template';
 
-const RegistrationPage = () => {
-	return (
-		<RegistrationTemplate temp={'registration'}/>
-	);
-};
+const RegistrationPage = () => (
+  <RegistrationTemplate temp="registration" />
+);
 
 export default RegistrationPage;

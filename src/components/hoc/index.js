@@ -1,5 +1,5 @@
-import withPizzaService from "./with-pizza-service";
+import withPizzaService from './with-pizza-service';
 
 export {
-	withPizzaService
+  withPizzaService,
 };

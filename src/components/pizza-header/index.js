@@ -1,3 +1,3 @@
-import PizzaHeader from "./pizza-header";
+import PizzaHeader from './pizza-header';
 
 export default PizzaHeader;

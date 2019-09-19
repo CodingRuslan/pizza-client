@@ -1,174 +1,151 @@
 import PizzaService from '../services/pizza-service';
+
 const pizzaService = new PizzaService();
 
-const registrationUser = (data) => {
-	return {
-		type: "POST_USER_CREATE",
-		payload: data
-	}
-};
+const registrationUser = (data) => ({
+  type: 'POST_USER_CREATE',
+  payload: data,
+});
 
-export const checkAuthenticationFromLocalStorage = () => {
-		return {
-			type: 'CHECK_AUTHENTICATION_FROM_LOCAL_STORAGE',
-	}
-};
+export const checkAuthenticationFromLocalStorage = () => ({
+  type: 'CHECK_AUTHENTICATION_FROM_LOCAL_STORAGE',
+});
 
-const correctLogin = (...args) => {
-	return {
-		type: 'POST_LOGIN_SUCCESS',
-		payload: args
-	};
-};
+const correctLogin = (...args) => ({
+  type: 'POST_LOGIN_SUCCESS',
+  payload: args,
+});
 
-const wrongLogin = () => {
-	return {
-		type: 'POST_LOGIN_WRONG',
-		payload: 'Неправильный логин или пароль'
-	};
-};
+const wrongLogin = () => ({
+  type: 'POST_LOGIN_WRONG',
+  payload: 'Неправильный логин или пароль',
+});
 
-export const logOut = () => {
-	return {
-		type: 'FETCH_LOG_OUT',
-	};
-};
+export const logOut = () => ({
+  type: 'FETCH_LOG_OUT',
+});
 
-const loginError = (error) => {
-	return {
-		type: "POST_LOGIN_FAILURE",
-		payload: error
-	}
-};
+const loginError = (error) => ({
+  type: 'POST_LOGIN_FAILURE',
+  payload: error,
+});
 
-const ingredientsRequested = () => {
-	return {
-		type: 'FETCH_INGREDIENTS_REQUEST'
-	}
-};
+const ingredientsRequested = () => ({
+  type: 'FETCH_INGREDIENTS_REQUEST',
+});
 
-const ingredientsLoaded = (newIngredients) => {
-	return {
-		type: 'FETCH_INGREDIENTS_SUCCESS',
-		payload: newIngredients
-	};
-};
+const ingredientsLoaded = (newIngredients) => ({
+  type: 'FETCH_INGREDIENTS_SUCCESS',
+  payload: newIngredients,
+});
 
-const ingredientsError = (error) => {
-	return {
-		type: "FETCH_INGREDIENTS_FAILURE",
-		payload: error
-	}
-};
+const ingredientsError = (error) => ({
+  type: 'FETCH_INGREDIENTS_FAILURE',
+  payload: error,
+});
 
-const historyItemsRequested = () => {
-	return {
-		type: 'FETCH_HISTORY_ITEMS_REQUEST'
-	}
-};
+const historyItemsRequested = () => ({
+  type: 'FETCH_HISTORY_ITEMS_REQUEST',
+});
 
-const historyItemsLoaded = (newHistoryItems) => {
-	return {
-		type: 'FETCH_HISTORY_ITEMS_SUCCESS',
-		payload: newHistoryItems
-	};
-};
+const historyItemsLoaded = (newHistoryItems) => ({
+  type: 'FETCH_HISTORY_ITEMS_SUCCESS',
+  payload: newHistoryItems,
+});
 
-const historyItemsError = (error) => {
-	return {
-		type: "FETCH_HISTORY_ITEMS_FAILURE",
-		payload: error
-	}
-};
+const historyItemsError = (error) => ({
+  type: 'FETCH_HISTORY_ITEMS_FAILURE',
+  payload: error,
+});
 
-const orderPlaced = () => {
-	return {
-		type: 'MAKE_NEW_ORDER_REQUEST'
-	}
-};
+const historyDetailsItemsLoaded = (newHistoryItems) => ({
+  type: 'FETCH_HISTORY_DETAILS_ITEMS_SUCCESS',
+  payload: newHistoryItems,
+});
 
-const orderIsReady = (newOrder) => {
-	return {
-		type: 'MAKE_NEW_ORDER_SUCCESS',
-		payload: newOrder
-	};
-};
+const orderPlaced = () => ({
+  type: 'MAKE_NEW_ORDER_REQUEST',
+});
 
-const orderError = (error) => {
-	return {
-		type: "MAKE_NEW_ORDER_FAILURE",
-		payload: error
-	}
-};
+const orderIsReady = (newOrder) => ({
+  type: 'MAKE_NEW_ORDER_SUCCESS',
+  payload: newOrder,
+});
 
-export const ingredientAddedToCart = (ingredientId) => {
-	return {
-		type: 'INGREDIENT_ADDED_TO_CART',
-		payload: ingredientId
-	}
-};
+const orderError = (error) => ({
+  type: 'MAKE_NEW_ORDER_FAILURE',
+  payload: error,
+});
 
-export const ingredientRemoveFromCart = (ingredientId) => {
-	return {
-		type: 'INGREDIENT_REMOVED_FROM_CART',
-		payload: ingredientId
-	}
-};
+export const ingredientAddedToCart = (ingredientId) => ({
+  type: 'INGREDIENT_ADDED_TO_CART',
+  payload: ingredientId,
+});
 
-export const allIngredientRemoveFromCart = (ingredientId) => {
-	return {
-		type: 'ALL_INGREDIENTS_REMOVED_FROM_CART',
-		payload: ingredientId
-	}
-};
+export const ingredientRemoveFromCart = (ingredientId) => ({
+  type: 'INGREDIENT_REMOVED_FROM_CART',
+  payload: ingredientId,
+});
+
+export const allIngredientRemoveFromCart = (ingredientId) => ({
+  type: 'ALL_INGREDIENTS_REMOVED_FROM_CART',
+  payload: ingredientId,
+});
 
 const fetchIngredients = () => (dispatch) => {
-	dispatch(ingredientsRequested());
-	pizzaService.getIngredients()
-		.then(e => dispatch(ingredientsLoaded(e)))
-		.catch((err) => dispatch(ingredientsError(err)));
+  dispatch(ingredientsRequested());
+  pizzaService.getIngredients()
+    .then((e) => dispatch(ingredientsLoaded(e)))
+    .catch((err) => dispatch(ingredientsError(err)));
 };
 
 const fetchHistoryItems = (userId) => (dispatch) => {
-	dispatch(historyItemsRequested());
-	pizzaService.getHistoryItems(userId)
-		.then(e => dispatch(historyItemsLoaded(e)))
-		.catch((err) => dispatch(historyItemsError(err)));
+  dispatch(historyItemsRequested());
+  pizzaService.getHistoryItems(userId)
+    .then((e) => dispatch(historyItemsLoaded(e)))
+    .catch((err) => dispatch(historyItemsError(err)));
+};
+
+const fetchHistoryDetailsItems = (orderId) => (dispatch) => {
+  pizzaService.getHistoryDetailsItems(orderId)
+    .then((e) => dispatch(historyDetailsItemsLoaded(e)))
+    .catch((err) => dispatch(historyItemsError(err)));
 };
 
 const fetchLogin = (login, pass) => (dispatch) => {
-	pizzaService.logIn(login, pass)
-		.then(e => {
-			if (e.data.login.length > 0){
-				dispatch(correctLogin(e.data.login, e.data.idusers))
-			} else {
-				dispatch(wrongLogin());
-			}
-		})
-		.catch((err) => dispatch(loginError(err)));
+  pizzaService.logIn(login, pass)
+    .then((e) => {
+      if (e.data.login.length > 0) {
+        dispatch(correctLogin(e.data.login, e.data.idusers));
+      } else {
+        dispatch(wrongLogin());
+      }
+    })
+    .catch((err) => dispatch(loginError(err)));
 };
 
 const fetchRegistration = (login, pass) => (dispatch) => {
-	pizzaService.registration(login, pass)
-		.then(e => {
-			dispatch(registrationUser(e.data))
-		})
-		.catch((err) => dispatch(loginError(err)));
+  pizzaService.registration(login, pass)
+    .then((e) => {
+      dispatch(registrationUser(e.data));
+    })
+    .catch((err) => dispatch(loginError(err)));
 };
 
 const fetchMakeOrder = (userId, cartItems, orderTotal) => (dispatch) => {
-	pizzaService.makeOrder(userId, cartItems, orderTotal)
-		.then(e => {
-			dispatch(orderIsReady(e.data))
-		})
-		.catch((err) => dispatch(orderError(err)));
-	dispatch(orderPlaced());
+  pizzaService.makeOrder(userId, cartItems, orderTotal)
+    .then((e) => {
+      dispatch(orderIsReady(e.data));
+    })
+    .catch((err) => dispatch(orderError(err)));
+  dispatch(orderPlaced());
 };
 
 export {
-	fetchIngredients,
-	fetchHistoryItems,
-	fetchLogin,
-	fetchRegistration,
-	fetchMakeOrder
-}
+  fetchIngredients,
+  fetchHistoryItems,
+  fetchHistoryDetailsItems,
+  fetchLogin,
+  fetchRegistration,
+  fetchMakeOrder,
+};
