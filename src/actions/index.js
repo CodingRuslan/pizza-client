@@ -1,3 +1,4 @@
+import io from 'socket.io-client/dist/socket.io';
 import PizzaService from '../services/pizza-service';
 
 const pizzaService = new PizzaService();
@@ -63,8 +64,9 @@ const historyDetailsItemsLoaded = (newHistoryItems) => ({
   payload: newHistoryItems,
 });
 
-const orderPlaced = () => ({
+const orderPlaced = (orderId) => ({
   type: 'MAKE_NEW_ORDER_REQUEST',
+  payload: orderId,
 });
 
 const orderIsReady = (newOrder) => ({
@@ -91,6 +93,8 @@ export const allIngredientRemoveFromCart = (ingredientId) => ({
   type: 'ALL_INGREDIENTS_REMOVED_FROM_CART',
   payload: ingredientId,
 });
+
+const socket = io.connect('http://localhost:8080');
 
 const fetchIngredients = () => (dispatch) => {
   dispatch(ingredientsRequested());
@@ -135,10 +139,13 @@ const fetchRegistration = (login, pass) => (dispatch) => {
 const fetchMakeOrder = (userId, cartItems, orderTotal) => (dispatch) => {
   pizzaService.makeOrder(userId, cartItems, orderTotal)
     .then((e) => {
-      dispatch(orderIsReady(e.data));
+      socket.emit('submitOrder', e.data);
+      dispatch(orderPlaced(e.data));
+      socket.on('orderIsReady', (id) => {
+        dispatch(orderIsReady(id));
+      });
     })
     .catch((err) => dispatch(orderError(err)));
-  dispatch(orderPlaced());
 };
 
 export {

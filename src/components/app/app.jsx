@@ -1,15 +1,18 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import {
   HomePage, HistoryPage, LoginPage, RegistrationPage, HistoryOrderDetails,
 } from '../pages';
 import './app.css';
 import Navbar from '../navbar';
+import ModalWindow from '../modal-window';
 
 
 const App = ({ isLoggedIn }) => (
   <main role="main" className="container">
+    <ModalWindow />
     <Navbar />
 
     <Switch>
@@ -66,6 +69,10 @@ const App = ({ isLoggedIn }) => (
     </Switch>
   </main>
 );
+
+App.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
+};
 
 const mapStateToProps = ({ isLoggedIn }) => ({ isLoggedIn });
 

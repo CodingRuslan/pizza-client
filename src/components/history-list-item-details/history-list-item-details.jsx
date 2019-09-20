@@ -1,15 +1,18 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import compose from '../../utils/compose';
 import { fetchHistoryDetailsItems } from '../../actions';
 import IngredientListItem from '../ingredient-list-item';
+import './history-list-item-details.css';
 
 class HistoryItemDetails extends React.Component {
-  componentDidMount(props = this.props) {
-    const { match } = props;
+  componentDidMount() {
+    const { match, fetchHistoryDetailsItems } = this.props;
     const { orderId } = match.params;
-    props.fetchHistoryDetailsItems(orderId);
+    fetchHistoryDetailsItems(orderId);
   }
 
   render() {
@@ -47,6 +50,13 @@ const mapStateToProps = ({
 }) => ({
   historyDetailsItems, ingredients,
 });
+
+HistoryItemDetails.propTypes = {
+  fetchHistoryDetailsItems: PropTypes.func.isRequired,
+  match: PropTypes.object.isRequired,
+  historyDetailsItems: PropTypes.array.isRequired,
+  ingredients: PropTypes.array.isRequired,
+};
 
 export default compose(
   withRouter,

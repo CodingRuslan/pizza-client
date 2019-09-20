@@ -1,0 +1,6 @@
+.modal-dialog {
+    position: absolute;
+    visibility: hidden;
+    width: 600px;
+    z-index: 999;
+}

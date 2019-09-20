@@ -35,7 +35,8 @@ const updateCartItems = (cartItems, item, idx) => {
   ];
 };
 
-const updateTotalOrder = (ingredient, orderTotal, quantity) => orderTotal + quantity * ingredient.timeCook;
+const updateTotalOrder = (ingredient, orderTotal, quantity) => orderTotal + quantity
+  * ingredient.timeCook;
 
 const updateCartItem = (ingredient, item, quantity) => {
   if (item) {
@@ -55,9 +56,9 @@ const updateCartItem = (ingredient, item, quantity) => {
 
 const updateOrder = (state, ingredientId, quantity) => {
   const { ingredients, cartItems, orderTotal } = state;
-  const ingredient = ingredients.find((ingredient) => ingredient.id === ingredientId);
+  const ingredient = ingredients.find((e) => e.id === ingredientId);
 
-  const itemIndex = cartItems.findIndex((ingredient) => ingredient.id === ingredientId);
+  const itemIndex = cartItems.findIndex((e) => e.id === ingredientId);
   const item = cartItems[itemIndex];
   const newItem = updateCartItem(ingredient, item, quantity);
 
@@ -82,6 +83,7 @@ const checkAuth = (state) => {
 };
 
 const reducer = (state = initialState, action) => {
+  let item;
   switch (action.type) {
     case 'POST_USER_CREATE':
       window.alert(action.payload);
@@ -183,7 +185,7 @@ const reducer = (state = initialState, action) => {
       };
 
     case 'MAKE_NEW_ORDER_REQUEST':
-      window.alert('Ваш заказ отрпавлен в обработку');
+      window.alert(`Ваш заказ # ${action.payload} отрпавлен в обработку`);
       return {
         ...state,
         cartItems: [],
@@ -210,7 +212,7 @@ const reducer = (state = initialState, action) => {
       return updateOrder(state, action.payload, -1);
 
     case 'ALL_INGREDIENTS_REMOVED_FROM_CART':
-      const item = state.cartItems.find(({ id }) => id === action.payload);
+      item = state.cartItems.find(({ id }) => id === action.payload);
       return updateOrder(state, action.payload, -item.count);
 
     default:

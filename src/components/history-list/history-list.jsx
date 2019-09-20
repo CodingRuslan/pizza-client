@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import './history-list.css';
 import { fetchHistoryItems } from '../../actions';
@@ -11,9 +12,9 @@ import ErrorIndicator from '../error-indicator';
 
 class HistoryList extends Component {
   componentDidMount() {
-    const { userId } = this.props;
+    const { userId, fetchHistoryItems } = this.props;
 
-    this.props.fetchHistoryItems(userId);
+    fetchHistoryItems(userId);
   }
 
   render() {
@@ -65,6 +66,14 @@ Order status:
     );
   }
 }
+
+HistoryList.propTypes = {
+  // userId: PropTypes.number.isRequired,
+  fetchHistoryItems: PropTypes.func.isRequired,
+  historyItems: PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired,
+  error: PropTypes.string,
+};
 
 const mapStateToProps = ({
   historyItems, userId, loading, error,
