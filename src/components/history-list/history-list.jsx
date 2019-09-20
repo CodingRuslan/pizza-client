@@ -68,7 +68,7 @@ Order status:
 }
 
 HistoryList.propTypes = {
-  // userId: PropTypes.number.isRequired,
+  userId: PropTypes.string.isRequired,
   fetchHistoryItems: PropTypes.func.isRequired,
   historyItems: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired,

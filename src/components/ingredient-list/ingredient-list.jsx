@@ -9,7 +9,6 @@ import { compose } from '../../utils';
 import './ingredient-list.css';
 import Spinner from '../spinner';
 import ErrorIndicator from '../error-indicator';
-import ModalWindow from '../modal-window/';
 
 const IngredientList = ({ ingredients, onAddedToCart }) => (
   <ul className="ingredient-list">

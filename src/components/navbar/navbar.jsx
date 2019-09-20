@@ -2,12 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './navbar.css';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import {
   checkAuthenticationFromLocalStorage,
   logOut,
 } from '../../actions';
-
 
 const RegLogBar = () => (
   <>
@@ -34,7 +34,8 @@ const LogOutBar = ({ logOut }) => (
 
 class Navbar extends React.Component {
   componentDidMount() {
-    this.props.checkAuthenticationFromLocalStorage();
+    const { checkAuthenticationFromLocalStorage } = this.props;
+    checkAuthenticationFromLocalStorage();
   }
 
   render() {
@@ -48,7 +49,7 @@ class Navbar extends React.Component {
           </Link>
           <h3>
             <span className="badge badge-secondary">
-Hi
+Hi_
               {loginName}
             </span>
           </h3>
@@ -72,6 +73,14 @@ Hi
     );
   }
 }
+
+Navbar.propTypes = {
+  checkAuthenticationFromLocalStorage: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
+  loginName: PropTypes.string.isRequired,
+  logOut: PropTypes.func.isRequired,
+};
+
 
 const mapStateToProps = ({ loginName, isLoggedIn }) => ({ loginName, isLoggedIn });
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import './shopping-cart-table.css';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import {
   ingredientAddedToCart,
@@ -12,7 +13,8 @@ import { compose } from '../../utils';
 import { withPizzaService } from '../hoc';
 
 const ShoppingCartTable = ({
-  items, total, userId, ingredientRemoveFromCart, ingredientAddedToCart, allIngredientRemoveFromCart, fetchMakeOrder,
+  items, total, userId, ingredientRemoveFromCart, ingredientAddedToCart,
+  allIngredientRemoveFromCart, fetchMakeOrder,
 }) => {
   const renderRow = (item, idx) => {
     const {
@@ -32,18 +34,21 @@ sec
           <button
             onClick={() => allIngredientRemoveFromCart(id)}
             className="btn btn-outline-danger btn-sm float-right"
+            type="button"
           >
             <i className="fa fa-trash-o" />
           </button>
           <button
             onClick={() => { ingredientAddedToCart(id); }}
             className="btn btn-outline-success btn-sm float-right"
+            type="button"
           >
             <i className="fa fa-plus-circle" />
           </button>
           <button
             onClick={() => ingredientRemoveFromCart(id)}
             className="btn btn-outline-warning btn-sm float-right"
+            type="button"
           >
             <i className="fa fa-minus-circle" />
           </button>
@@ -81,6 +86,16 @@ sec
       </div>
     </div>
   );
+};
+
+ShoppingCartTable.propTypes = {
+  ingredientRemoveFromCart: PropTypes.func.isRequired,
+  ingredientAddedToCart: PropTypes.func.isRequired,
+  allIngredientRemoveFromCart: PropTypes.func.isRequired,
+  fetchMakeOrder: PropTypes.func.isRequired,
+  items: PropTypes.array.isRequired,
+  total: PropTypes.number.isRequired,
+  userId: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = ({ cartItems, orderTotal, userId }) => ({

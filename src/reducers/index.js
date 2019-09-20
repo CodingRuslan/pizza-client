@@ -10,6 +10,7 @@ const initialState = {
   orderTotal: 0,
   historyItems: [],
   historyDetailsItems: [],
+  messageForModalWindow: '',
 };
 
 
@@ -86,13 +87,12 @@ const reducer = (state = initialState, action) => {
   let item;
   switch (action.type) {
     case 'POST_USER_CREATE':
-      window.alert(action.payload);
       return {
         ...state,
+        messageForModalWindow: action.payload,
       };
 
     case 'POST_LOGIN_SUCCESS':
-      window.alert('Теперь вы можете сделать заказ');
       localStorage.setItem('userId', action.payload[1]);
       localStorage.setItem('loginName', action.payload[0]);
       return {
@@ -100,6 +100,7 @@ const reducer = (state = initialState, action) => {
         loginName: action.payload[0],
         userId: action.payload[1],
         isLoggedIn: true,
+        messageForModalWindow: 'Теперь вы можете сделать заказ',
         loading: false,
         error: null,
       };
@@ -185,17 +186,17 @@ const reducer = (state = initialState, action) => {
       };
 
     case 'MAKE_NEW_ORDER_REQUEST':
-      window.alert(`Ваш заказ # ${action.payload} отрпавлен в обработку`);
       return {
         ...state,
         cartItems: [],
         orderTotal: 0,
+        messageForModalWindow: `Ваш заказ № ${action.payload} отрпавлен в обработку`,
       };
 
     case 'MAKE_NEW_ORDER_SUCCESS':
-      window.alert(`Заказ номер ${action.payload} готов `);
       return {
         ...state,
+        messageForModalWindow: `Заказ № ${action.payload} готов `,
       };
 
     case 'MAKE_NEW_ORDER_FAILURE':
@@ -203,6 +204,12 @@ const reducer = (state = initialState, action) => {
         ...state,
         cartItems: [],
         error: action.payload,
+      };
+
+    case 'MODAL_WINDOW_SHOULD_CLOSE':
+      return {
+        ...state,
+        messageForModalWindow: '',
       };
 
     case 'INGREDIENT_ADDED_TO_CART':

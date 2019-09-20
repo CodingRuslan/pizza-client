@@ -1,5 +1,6 @@
 import React from 'react';
 import './ingredient-list-item.css';
+import PropTypes from 'prop-types';
 
 const IngredientListItem = ({ ingredient, onAddedToCart }) => {
   const { name, timeCook, imageSrc } = ingredient;
@@ -24,6 +25,11 @@ Add to cart
       </div>
     </div>
   );
+};
+
+IngredientListItem.propTypes = {
+  onAddedToCart: PropTypes.func.isRequired,
+  ingredient: PropTypes.object.isRequired,
 };
 
 export default IngredientListItem;

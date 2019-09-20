@@ -1,6 +1,30 @@
 .modal-dialog {
-    position: absolute;
-    visibility: hidden;
-    width: 600px;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 3000px;
+    max-height: inherit;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 998;
+    background-color: rgba(0, 0, 0, .7);
+    margin-top: 0;
+}
+
+.modal-content {
+    width: 500px;
+    text-align: center;
+    height: 200px;
     z-index: 999;
+}
+
+.modal-header {
+    display: block;
+}
+
+.modal-footer {
+    display: block;
 }

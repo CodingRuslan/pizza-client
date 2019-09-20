@@ -10,9 +10,9 @@ import Navbar from '../navbar';
 import ModalWindow from '../modal-window';
 
 
-const App = ({ isLoggedIn }) => (
+const App = ({ isLoggedIn, messageForModalWindow }) => (
   <main role="main" className="container">
-    <ModalWindow />
+    { messageForModalWindow.length > 0 ? <ModalWindow /> : ''}
     <Navbar />
 
     <Switch>
@@ -72,8 +72,10 @@ const App = ({ isLoggedIn }) => (
 
 App.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
+  messageForModalWindow: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({ isLoggedIn }) => ({ isLoggedIn });
+const mapStateToProps = ({ isLoggedIn, messageForModalWindow }) => (
+  { isLoggedIn, messageForModalWindow });
 
 export default connect(mapStateToProps)(App);

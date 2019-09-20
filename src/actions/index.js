@@ -94,6 +94,10 @@ export const allIngredientRemoveFromCart = (ingredientId) => ({
   payload: ingredientId,
 });
 
+export const modalWindowClose = () => ({
+  type: 'MODAL_WINDOW_SHOULD_CLOSE',
+});
+
 const socket = io.connect('http://localhost:8080');
 
 const fetchIngredients = () => (dispatch) => {
