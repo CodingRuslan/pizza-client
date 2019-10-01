@@ -2,7 +2,7 @@
 const initialState = {
   isLoggedIn: false,
   loginName: '',
-  userId: null,
+  userId: '',
   ingredients: [],
   loading: true,
   error: null,
@@ -98,7 +98,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loginName: action.payload[0],
-        userId: action.payload[1],
+        userId: `${action.payload[1]}`,
         isLoggedIn: true,
         messageForModalWindow: 'Теперь вы можете сделать заказ',
         loading: false,
@@ -118,9 +118,9 @@ const reducer = (state = initialState, action) => {
       };
 
     case 'POST_LOGIN_WRONG':
-      window.alert(action.payload);
       return {
         ...state,
+        messageForModalWindow: action.payload,
       };
 
     case 'FETCH_LOG_OUT':

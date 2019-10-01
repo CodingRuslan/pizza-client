@@ -123,7 +123,7 @@ const fetchHistoryDetailsItems = (orderId) => (dispatch) => {
 const fetchLogin = (login, pass) => (dispatch) => {
   pizzaService.logIn(login, pass)
     .then((e) => {
-      if (e.data.login.length > 0) {
+      if (e.data.login) {
         dispatch(correctLogin(e.data.login, e.data.idusers));
       } else {
         dispatch(wrongLogin());

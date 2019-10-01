@@ -49,8 +49,7 @@ class Navbar extends React.Component {
           </Link>
           <h3>
             <span className="badge badge-secondary">
-Hi_
-              {loginName}
+              {loginName ? `Hi ${loginName}` : ''}
             </span>
           </h3>
           <div className="collapse navbar-collapse">

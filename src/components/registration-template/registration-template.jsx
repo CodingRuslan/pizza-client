@@ -28,14 +28,13 @@ class RegistrationTemplate extends React.Component {
 					<div className="card card-signin my-5">
 						<div className="card-body">
 							<h5 className="card-title text-center text-uppercase">{temp}</h5>
-							<form className="form-signin" >
+							<form className="form-signin">
 								<div className="form-label-group">
-									<input onChange={(e) => {
-											this.setState({login: e.target.value})
-									}}
+									<input
+										onChange={(e) => this.setState({login: e.target.value}) }
 												 type="email"
 												 id="inputEmail"
-												 className="form-control"
+												 className="form-control "
 												 placeholder="Email address"
 												 required
 												 autoFocus/>
@@ -53,8 +52,8 @@ class RegistrationTemplate extends React.Component {
 								</div>
 
 								<button onClick={(e) => {
+									e.preventDefault();
 									if (this.state.login === undefined || this.state.password === undefined) {
-										// e.preventDefault();
 										alert('Заполните данные')
 									} else {
 										if (temp === 'login') {
